@@ -4,7 +4,7 @@ const Character = ({ data }) => {
     const [imageLoading, setImageLoading] = useState(true)
     const navigate = useNavigate()
     return (
-        <div className="col-9 col-md-3 col-sm-4 col-lg-2 d-flex flex-column justify-content-center align-items-center rounded-5" key={data.name} onClick={() => navigate(`/characters/${data.id}`)} style={{ overFlow: "hidden" }}>
+        <div className="col-9 col-md-3 col-sm-4 col-lg-2 d-flex flex-column justify-content-center align-items-center rounded-5" key={data.name} onClick={() => navigate(`/characters/${data.id}`)} style={{ overFlow: "hidden",cursor : "pointer" }}>
             <div style={{overFlow : "hidden",width : "100%",height : "75%"}} className="rounded-4 d-flex justify-content-center align-items-center">
                 <span style={{display : imageLoading ? "flex" : "none",width : 200,height : 200,justifyContent : "center",alignItems : "center"}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="black" className="bi bi-person-circle" viewBox="0 0 16 16">

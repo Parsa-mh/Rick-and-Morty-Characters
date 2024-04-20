@@ -9,14 +9,13 @@ function App() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true)
   useEffect(() => {
-    const characters = async () => {
-      axios.get(url).then((res) => {
-        setData(res.data.results);
-        setLoading(false)
-      })
-    }
-    characters()
-  }, [data.length])
+    axios.get(url).then((res) => {
+      setData(res.data.results);
+      setLoading(false)
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [data])
   const findCharacter = (number) => {
     return data.find(item => item.id == number)
   }
