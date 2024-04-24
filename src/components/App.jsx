@@ -1,31 +1,36 @@
 import { useState, useEffect } from "react";
+import { Routes,Route,Navigate } from "react-router-dom"
 import axios from "axios";
 import Error from "./PageNotFound";
-import { Routes,Route,Navigate } from "react-router-dom"
 import Characters from "./characters";
 import ViewCharacter from "./ViewCharacter";
 function App() {
-  let url = "https://rickandmortyapi.com/api/character";
+  const url = "https://rickandmortyapi.com/api/character";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true)
+  const [isError,setIsError] = useState(false)
   useEffect(() => {
     axios.get(url).then((res) => {
       setData(res.data.results);
       setLoading(false)
-    }).catch((err) => {
-      console.log(err);
+    }).catch(() => {
+      setIsError(true)
+      setLoading(false)
     })
   }, [data])
   const findCharacter = (number) => {
     return data.find(item => item.id == number)
   }
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to={"/characters"} />} />
-      <Route path="/characters" element={<Characters data={data} isLoading={loading} />} />
-      <Route path="/characters/:characterId" element={<ViewCharacter findCharacter={findCharacter} />} />
-      <Route path="*" element={<Error />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Navigate to={"/characters"} />} />
+        <Route path="/characters" element={<Characters data={data} isLoading={loading} isError={isError} />} />
+        <Route path="/characters/:characterId" element={<ViewCharacter findCharacter={findCharacter} />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+      {isError && (<h1 className="text-center">Network Is Not Connected</h1>)}
+    </>
   );
 }
 
